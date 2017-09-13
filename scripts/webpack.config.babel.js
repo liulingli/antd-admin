@@ -8,6 +8,7 @@ const webpack = require('webpack');
 const config = {
   devtool: 'source-map',
   entry: [
+    'react-hot-loader/patch',
     './src/index.js'
   ],
   output : {
@@ -23,9 +24,16 @@ const config = {
         loader: 'babel-loader'
       },{
         test : /\.less$/,
-        include: path.join(__dirname, '../src'),
-        loader : 'less-loader'
-      }, {
+        include:[
+          path.join(__dirname, '../src'),
+          path.join(__dirname, '../node_modules/antd/dist/antd.less')
+        ],
+        loader : 'style-loader!css-loader!less-loader'
+      },{
+        test : /\.css$/,
+        include: path.join(__dirname, '../node_modules/antd'),
+        loader : 'style-loader!css-loader'
+      },{
         test: /\.png$/,
         loader: 'file-loader'
       }, {

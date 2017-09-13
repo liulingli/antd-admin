@@ -1,10 +1,12 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { AppContainer } from 'react-hot-loader'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { AppContainer } from 'react-hot-loader';
+import {browserHistory, Router} from "react-router";
+import MainLayout from './component/layout/layout';
 
 ReactDOM.render(
   <AppContainer>
-     <div className="ceshi">测试1</div>
+    <MainLayout/>
   </AppContainer>,
   document.getElementById('main')
-)
+);
