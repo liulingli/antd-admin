@@ -1,21 +1,35 @@
-/**
- * Created by liulingli on 2017/9/9.
- * desc webpack配置文件
- */
-const path = require("path");
+const path = require('path');
 const webpack = require('webpack');
-
-const config = {
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const config  = {
   devtool: 'source-map',
-  entry: [
-    'react-hot-loader/patch',
-    './src/index.js'
-  ],
-  output : {
-    path: path.resolve(__dirname, "./public"),
-    filename: 'bundle.js',
-    publicPath: '/public/'
+  entry: {
+    app :  './src/index',
+   // vendors : 'react'
   },
+  output : {
+    path: path.join(__dirname, "../dist"),
+    filename: 'bundle.js',
+    library:'dist'
+  },
+  plugins: [
+    //把入口文件vendors数组指定的第三方包打包成verdors.js
+   // new webpack.optimize.CommonsChunkPlugin('vendors','vendors.js'),
+    //css单独打包
+    new ExtractTextPlugin("styles.css"),
+    //压缩代码
+    new webpack.optimize.UglifyJsPlugin({
+      minimize: true,
+      compress: {
+        warnings: false
+      }
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production')
+      }
+    })
+  ],
   module : {
     rules : [
       {
@@ -41,11 +55,7 @@ const config = {
         loader: 'file-loader'
       }
     ]
-  },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
-  ],
+  }
 };
 
 module.exports = config;
