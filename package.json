@@ -6,7 +6,7 @@
     "start": "webpack-dev-server --config scripts/webpack.config.babel.js --hot --history-api-fallback --open",
     "service": "node app.js",
     "dist": "webpack --config scripts/webpack.prod.config.js --progress --profile --colors",
-    "clean" : "node scripts/clean.js"
+    "clean": "node scripts/clean.js"
   },
   "license": "MIT",
   "repository": {
@@ -21,6 +21,7 @@
     "extract-text-webpack-plugin": "^3.0.0",
     "html-webpack-plugin": "^2.30.1",
     "mock": "^0.1.1",
+    "moment": "^2.18.1",
     "qs": "^6.5.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",

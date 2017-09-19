@@ -23,8 +23,8 @@ export default class MainLayout extends React.Component{
       },{
         key : '1',
         icon : 'desktop',
-        text : 'desktop',
-        path : '/desktop'
+        text : 'table',
+        path : '/table'
       },{
         key : '2',
         icon : 'inbox',

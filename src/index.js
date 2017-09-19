@@ -6,6 +6,8 @@ import ReactDOM from 'react-dom';
 import {browserHistory, Router} from "react-router";
 import MainLayout from './component/layout/layout';
 import mainRoute from './route/mainRoute';
+import './themes/theme.less';
+
 const rootRoute = {
   path: '/',
   component: MainLayout,
