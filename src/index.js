@@ -13,7 +13,7 @@ const rootRoute = {
   component: MainLayout,
   childRoutes: mainRoute
 };
-console.log(mainRoute);
+
 ReactDOM.render((
   <Router history={browserHistory} routes={rootRoute}/>
 ), document.getElementById('main'));

@@ -25,11 +25,6 @@ export default class MainLayout extends React.Component{
         icon : 'desktop',
         text : 'table',
         path : '/table'
-      },{
-        key : '2',
-        icon : 'inbox',
-        text : 'inbox',
-        path : '/inbox'
       }]
     }
   }

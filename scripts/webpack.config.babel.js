@@ -4,48 +4,54 @@
  */
 const path = require("path");
 const webpack = require('webpack');
-
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const config = {
-  devtool: 'source-map',
-  entry: [
-    'react-hot-loader/patch',
-    './src/index.js'
-  ],
-  output : {
-    path: path.resolve(__dirname, "./public"),
-    filename: 'bundle.js',
-    publicPath: '/public/'
-  },
-  module : {
-    rules : [
-      {
-        test: /\.js?$/,
-        include: path.join(__dirname, '../src'),
-        loader: 'babel-loader'
-      },{
-        test : /\.less$/,
-        include:[
-          path.join(__dirname, '../src'),
-          path.join(__dirname, '../node_modules/antd/dist/antd.less')
-        ],
-        loader : 'style-loader!css-loader!less-loader'
-      },{
-        test : /\.css$/,
-        include: path.join(__dirname, '../node_modules/antd'),
-        loader : 'style-loader!css-loader'
-      },{
-        test: /\.png$/,
-        loader: 'file-loader'
-      }, {
-        test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
-        loader: 'file-loader'
-      }
-    ]
-  },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
-  ],
+    devtool: 'source-map',
+    entry: [
+        'react-hot-loader/patch',
+        './src/index.js'
+    ],
+    output: {
+        path: path.join(__dirname, "../dist"),
+        filename: 'bundle.js',
+        library: 'dist'
+    },
+    module: {
+        rules: [
+            {
+                test: /\.js?$/,
+                include: path.join(__dirname, '../src'),
+                loader: 'babel-loader'
+            }, {
+                test: /\.less$/,
+                include: [
+                    path.join(__dirname, '../src'),
+                    path.join(__dirname, '../node_modules/antd/dist/antd.less')
+                ],
+                loader: 'style-loader!css-loader!less-loader'
+            }, {
+                test: /\.css$/,
+                include: path.join(__dirname, '../node_modules/antd'),
+                loader: 'style-loader!css-loader'
+            }, {
+                test: /\.png$/,
+                loader: 'file-loader'
+            }, {
+                test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
+                loader: 'file-loader'
+            }
+        ]
+    },
+    plugins: [
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NoEmitOnErrorsPlugin(),
+        new ExtractTextPlugin("styles.css"),
+        new HtmlWebpackPlugin({  // Also generate a test.html
+            filename: 'index.html',
+            template: './index.html'
+        })
+    ],
 };
 
 module.exports = config;
