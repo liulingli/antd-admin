@@ -6,6 +6,7 @@ const path = require("path");
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const devServer = require('webpack-dev-server');
 const config = {
     devtool: 'source-map',
     entry: [
@@ -52,6 +53,19 @@ const config = {
             template: './index.html'
         })
     ],
+    devServer: {
+        historyApiFallback: true,
+        hot: true,
+        inline: true,
+        stats: { colors: true },
+        proxy: {
+            '/api': {
+                target: 'http://localhost:8084',
+                changeOrigin: true,
+                pathRewrite: {'^/api': '/'}
+            }
+        }
+    },
 };
 
 module.exports = config;

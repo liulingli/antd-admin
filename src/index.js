@@ -9,13 +9,13 @@ import mainRoute from './route/mainRoute';
 import './themes/theme.less';
 
 const rootRoute = {
-  path: '/',
-  component: MainLayout,
-  childRoutes: mainRoute
+    path: '/',
+    component: MainLayout,
+    childRoutes: mainRoute
 };
 
 ReactDOM.render((
-  <Router history={browserHistory} routes={rootRoute}/>
+    <Router history={browserHistory} routes={rootRoute}/>
 ), document.getElementById('main'));
 
 window.browserHistory = browserHistory;

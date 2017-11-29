@@ -4,7 +4,6 @@
   "description": "基于antd的admin风格的后台管理框架",
   "scripts": {
     "start": "webpack-dev-server --config scripts/webpack.config.babel.js --hot --history-api-fallback --open",
-    "service": "node app.js",
     "dist": "webpack --config scripts/webpack.prod.config.js --progress --profile --colors",
     "clean": "node scripts/clean.js"
   },
@@ -59,6 +58,6 @@
     "less-loader": "^4.0.5",
     "style-loader": "^0.18.2",
     "webpack": "^3.5.6",
-    "webpack-dev-server": "^2.7.1"
+    "webpack-dev-server": "^2.9.5"
   }
 }
