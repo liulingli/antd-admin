@@ -4,11 +4,10 @@
 import React from 'react';
 import {AppContainer} from 'react-hot-loader';
 import {Layout, Icon, Menu, Popconfirm} from 'antd';
+import {browserHistory, Router} from "react-router";
 
 const {Header, Sider, Content} = Layout;
 const SubMenu = Menu.SubMenu;
-import Login from './login';
-import Register from './register';
 
 import './layout.less';
 
@@ -16,7 +15,6 @@ export default class MainLayout extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLogin: window.sessionStorage.getItem("isLogin") || false,
             collapse: false,
             menu: [{
                 key: '0',
@@ -30,6 +28,10 @@ export default class MainLayout extends React.Component {
                 path: '/table'
             }]
         }
+    }
+
+    componentWillMount(){
+        console.log(this.props)
     }
 
     /**
@@ -73,57 +75,51 @@ export default class MainLayout extends React.Component {
     render() {
         const {isLogin, collapse} = this.state;
         return (
-            <AppContainer>
-                {
-                    isLogin ?
-                        <Layout className="main-layout">
-                            <Header className={collapse ? "collapse" : ""}>
-                                <Icon type={collapse ? 'menu-unfold' : 'menu-fold'}
-                                      onClick={this.collapseToggle}/></Header>
-                            <div className="header-right">
-                                <ul className="header-menu">
-                                    <li className="menu-item"><Icon type="user"/>测试用户</li>
-                                    <Popconfirm placement="bottom" title={"确定退出系统？"} onConfirm={confirm} okText="确定"
-                                                cancelText="取消">
-                                        <li className="menu-item"><Icon type="logout"/>退出系统</li>
-                                    </Popconfirm>
+            <Layout className="main-layout">
+                <Header className={collapse ? "collapse" : ""}>
+                    <Icon type={collapse ? 'menu-unfold' : 'menu-fold'}
+                          onClick={this.collapseToggle}/></Header>
+                <div className="header-right">
+                    <ul className="header-menu">
+                        <li className="menu-item"><Icon type="user"/>测试用户</li>
+                        <Popconfirm placement="bottom" title={"确定退出系统？"} onConfirm={confirm} okText="确定"
+                                    cancelText="取消">
+                            <li className="menu-item"><Icon type="logout"/>退出系统</li>
+                        </Popconfirm>
 
-                                </ul>
-                            </div>
-                            <Layout>
-                                <Sider
-                                    trigger={null}
-                                    collapsible
-                                    collapsed={collapse}
-                                >
-                                    <div className="desc-layout">
-                                        <img src="./static/logo.png"/>
-                                        <span>antd-admin</span>
-                                    </div>
-                                    <Menu
-                                        defaultSelectedKeys={[this.state.menu[0].path]}
-                                        defaultOpenKeys={[this.state.menu[0].path]}
-                                        mode="inline"
-                                        theme="light"
-                                        inlineCollapsed={collapse}
-                                        onClick={this.onMenuChange}
-                                    >
-                                        {
-                                            this.state.menu.map((v, i) => {
-                                                return <Menu.Item key={v.path}>
-                                                    <Icon type={v.icon}/>
-                                                    <span>{v.text}</span>
-                                                </Menu.Item>
-                                            })
-                                        }
-                                    </Menu>
-                                </Sider>
-                                <Content>{this.props.children ? this.props.children : "测试"}</Content>
-                            </Layout>
-                        </Layout>
-                        : <Register checkLogin={this.checkLogin}/>
-                }
-            </AppContainer>
+                    </ul>
+                </div>
+                <Layout>
+                    <Sider
+                        trigger={null}
+                        collapsible
+                        collapsed={collapse}
+                    >
+                        <div className="desc-layout">
+                            <img src="./static/logo.png"/>
+                            <span>antd-admin</span>
+                        </div>
+                        <Menu
+                            defaultSelectedKeys={[this.state.menu[0].path]}
+                            defaultOpenKeys={[this.state.menu[0].path]}
+                            mode="inline"
+                            theme="light"
+                            inlineCollapsed={collapse}
+                            onClick={this.onMenuChange}
+                        >
+                            {
+                                this.state.menu.map((v, i) => {
+                                    return <Menu.Item key={v.path}>
+                                        <Icon type={v.icon}/>
+                                        <span>{v.text}</span>
+                                    </Menu.Item>
+                                })
+                            }
+                        </Menu>
+                    </Sider>
+                    <Content>{this.props.children ? this.props.children : "测试"}</Content>
+                </Layout>
+            </Layout>
         )
     }
 }

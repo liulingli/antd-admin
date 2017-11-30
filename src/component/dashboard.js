@@ -3,13 +3,13 @@
  */
 import React from 'react';
 
-export class Dashboard extends React.Component{
+export class Dashboard extends React.Component {
 
-  render(){
-    return(
-      <div className="dashboard">
-        dashboard
-      </div>
-    )
-  }
+    render() {
+        return (
+            <div className="dashboard">
+                dashboard
+            </div>
+        )
+    }
 }

@@ -1,127 +1,139 @@
 
-html,body,#main,.main-layout{
-  width:100%;
-  height:100%;
-  overflow:hidden;
-  background:#f8f8f8;
-  color:#3c3c3c;
+html, body, #main, .main-layout {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #f8f8f8;
+  color: #3c3c3c;
   font-family: "Microsoft Yahei";
 }
-.login{
-  width:100%;
-  height:100%;
+
+.login {
+  width: 100%;
+  height: 100%;
   display: table;
 }
 
-.login-content{
+.login-content {
   display: table-cell;
   vertical-align: middle;
   text-align: center;
 }
-.login-form{
-  width:340px;
+
+.login-form {
+  width: 340px;
   display: inline-block;
-  padding:30px;
-  -webkit-box-shadow: 0 0 100px rgba(0,0,0,.08);
-  box-shadow: 0 0 100px rgba(0,0,0,.08);
+  padding: 30px;
+  -webkit-box-shadow: 0 0 100px rgba(0, 0, 0, .08);
+  box-shadow: 0 0 100px rgba(0, 0, 0, .08);
 }
-.desc{
-  padding-bottom:25px;
-  img{
-    width:60px;
+
+.desc {
+  padding-bottom: 25px;
+  img {
+    width: 60px;
     vertical-align: middle;
   }
-  span{
-    font-size:14px;
-    margin-left:10px;
+  span {
+    font-size: 14px;
+    margin-left: 10px;
   }
 }
-.login-form-button{
-  width:100%;
+
+.login-form-button {
+  width: 100%;
 }
 
 //布局
-.ant-layout-header{
-  width:100%;
-  height:50px;
-  line-height:50px;
-  padding-left:200px;
-  background-color:#ffffff;
-  position:fixed;
-  left:0;
-  top:0;
+.ant-layout-header {
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  padding-left: 200px;
+  background-color: #ffffff;
+  position: fixed;
+  left: 0;
+  top: 0;
   transition: all 0.5s;
-  .anticon-menu-fold,.anticon-menu-unfold{
-    font-size:20px;
-    padding:0 10px;
+  .anticon-menu-fold, .anticon-menu-unfold {
+    font-size: 20px;
+    padding: 0 10px;
     vertical-align: middle;
     transition: color 0.5s;
-    cursor:pointer;
-    &:hover{
-      color:#108ee9;
+    cursor: pointer;
+    &:hover {
+      color: #108ee9;
     }
   }
 }
-.ant-layout-header.collapse{
-  padding-left:60px;
+
+.ant-layout-header.collapse {
+  padding-left: 60px;
 }
-.ant-layout-sider{
-  background-color:#ffffff;
+
+.ant-layout-sider {
+  background-color: #ffffff;
   transition: all 0.5s;
   overflow: hidden;
 }
-.ant-layout-sider.collapse{
-  min-width:60px !important;
-  max-width:60px !important;
-  .desc-layout span{
+
+.ant-layout-sider.collapse {
+  min-width: 60px !important;
+  max-width: 60px !important;
+  .desc-layout span {
     display: none;
   }
-  .desc-layout img{
-    width:30px;
+  .desc-layout img {
+    width: 30px;
   }
 }
-.ant-layout-content{
-  padding-top:50px;
+
+.ant-layout-content {
+  padding-top: 50px;
 }
-.desc-layout{
-  padding:25px 15px;
+
+.desc-layout {
+  padding: 25px 15px;
   white-space: nowrap;
-  img{
-    width:40px;
+  img {
+    width: 40px;
     vertical-align: middle;
     transition: all 0.5s;
   }
-  span{
-    font-size:14px;
-    margin-left:10px;
-    color:gray;
+  span {
+    font-size: 14px;
+    margin-left: 10px;
+    color: gray;
   }
 }
-.ant-menu-inline{
-  border-right:none;
+
+.ant-menu-inline {
+  border-right: none;
 }
-.header-right{
-  position:absolute;
-  right:0;
+
+.header-right {
+  position: absolute;
+  right: 0;
 }
-.header-menu .menu-item{
+
+.header-menu .menu-item {
   list-style: none;
   display: inline-block;
-  padding:0 16px;
-  line-height:50px;
-  cursor:pointer;
+  padding: 0 16px;
+  line-height: 50px;
+  cursor: pointer;
   transition: all 0.5s;
-  .anticon{
-    font-size:14px;
-    margin-right:6px;
+  .anticon {
+    font-size: 14px;
+    margin-right: 6px;
     vertical-align: middle;
     transition: all 0.5s;
   }
-  &:hover{
-    background-color:#ecf6fd;
-    color:#108ee9;
-    .anticon{
-      color:#108ee9;
+  &:hover {
+    background-color: #ecf6fd;
+    color: #108ee9;
+    .anticon {
+      color: #108ee9;
     }
   }
 }

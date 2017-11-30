@@ -3,16 +3,16 @@
  */
 
 import React from 'react';
-import {Form,Input,Button,Icon,Checkbox} from 'antd';
+import {Form, Input, Button, Icon, Checkbox} from 'antd';
 import '../../fetch';
 
 const FormItem = Form.Item;
 
-class RegisterForm extends React.Component{
-    constructor(props){
+class RegisterForm extends React.Component {
+    constructor(props) {
         super(props);
-        this.state={
-            isLogin : false
+        this.state = {
+            isLogin: false
         }
     }
 
@@ -24,16 +24,19 @@ class RegisterForm extends React.Component{
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
-                fetch("/api/users",{method:"post",body:values}).then((response)=>{
-                     console.log(response)
+                fetch("/api/users", {method: "post", body: values}).then((response) => {
+                    console.log(response)
+                    if (response.success) {
+                        browserHistory.push('/login');
+                    }
                 })
             }
         });
     };
 
-    render(){
-        const { getFieldDecorator } = this.props.form;
-        return(
+    render() {
+        const {getFieldDecorator} = this.props.form;
+        return (
             <div className="login">
                 <div className="login-content">
                     <Form onSubmit={this.handleSubmit} className="login-form">
@@ -43,23 +46,25 @@ class RegisterForm extends React.Component{
                         </div>
                         <FormItem>
                             {getFieldDecorator('userName', {
-                                rules: [{ required: true, message: '请输入用户名!' }],
+                                rules: [{required: true, message: '请输入用户名!'}],
                             })(
-                                <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="用户名" />
+                                <Input prefix={<Icon type="user" style={{fontSize: 13}}/>} placeholder="用户名"/>
                             )}
                         </FormItem>
                         <FormItem>
                             {getFieldDecorator('password', {
-                                rules: [{ required: true, message: '请输入登录密码!' }],
+                                rules: [{required: true, message: '请输入登录密码!'}],
                             })(
-                                <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="密码" />
+                                <Input prefix={<Icon type="lock" style={{fontSize: 13}}/>} type="password"
+                                       placeholder="密码"/>
                             )}
                         </FormItem>
                         <FormItem>
                             {getFieldDecorator('repassword', {
-                                rules: [{ required: true, message: '请重新输入登录密码!' }],
+                                rules: [{required: true, message: '请重新输入登录密码!'}],
                             })(
-                                <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="重新输入密码" />
+                                <Input prefix={<Icon type="lock" style={{fontSize: 13}}/>} type="password"
+                                       placeholder="重新输入密码"/>
                             )}
                         </FormItem>
                         <FormItem>
@@ -71,6 +76,7 @@ class RegisterForm extends React.Component{
         )
     }
 }
+
 const Register = Form.create()(RegisterForm);
 
 export default Register;
