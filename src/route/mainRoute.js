@@ -4,4 +4,7 @@ export default [{
 }, {
     path: '/table',
     component: require('../component/table').TableDemo,
+}, {
+    path: '/user',
+    component: require('../component/user').User,
 }]

@@ -26,12 +26,19 @@ export default class MainLayout extends React.Component {
                 icon: 'desktop',
                 text: 'table',
                 path: '/table'
+            }, {
+                key: '1',
+                icon: 'user',
+                text: 'user',
+                path: '/user'
             }]
         }
     }
 
     componentWillMount(){
         console.log(this.props)
+        // 生成左侧菜单
+
     }
 
     /**
