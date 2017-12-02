@@ -19,7 +19,10 @@ export class User extends React.Component {
             activeIndex: null,
             selectedRows: [],
             dataSource: [],
-            filteredInfo: null
+            filteredInfo: null,
+            total:0,
+            pageSize:20,
+            curPage:1
         };
         this.columns = [
             {
@@ -31,7 +34,7 @@ export class User extends React.Component {
             }, {
                 title: "用户id",
                 width: 100,
-                dataIndex: "id",
+                dataIndex: "user_id",
                 render: (text, record, index) => {
                     return <span title={text}>{text}</span>
                 }
@@ -55,7 +58,7 @@ export class User extends React.Component {
                 dataIndex: "",
                 render: (text, record, index) => {
                     return (<span>
-                                 <Button type="primary"> 编辑</Button>
+                                 <Button type="primary" style={{marginRight:10}}> 编辑</Button>
                                  <Button type="danger">删除</Button>
                             </span>
                     )
@@ -82,11 +85,21 @@ export class User extends React.Component {
      */
     getUserList(){
         this.setState({loading: false})
-        fetch("/api/users", {method: "get", body: {}}).then((response) => {
+        fetch("/api/users", {method: "get", body: {
+            pageSize : this.state.pageSize,
+            curPage :  this.state.curPage
+        }}).then((response) => {
             if (response.success) {
+                let total =  response.result.total;
+                let list = response.result.list;
+                let dataSource = list.map((v,i)=>{
+                    v.key = "row"+i;
+                    return v;
+                })
                 this.setState({
                     loading: false,
-                    dataSource:response.result
+                    dataSource:dataSource,
+                    total : total
                 })
             }
         })
@@ -125,9 +138,21 @@ export class User extends React.Component {
         }
     };
 
+   /**
+    * @method 分页切换
+    * @param page
+    * @param pageSize
+    */
+    onChange(page, pageSize){
+       this.setState({
+         curPage : page
+       },()=>{
+          this.getUserList();
+       })
+    }
 
     render() {
-        let {loading, dataSource, activeIndex} = this.state;
+        let {loading, dataSource, activeIndex,total,curPage,pageSize} = this.state;
         const {className, ...other} = this.props;
 
         return (
@@ -159,9 +184,12 @@ export class User extends React.Component {
                                         columns={this.columns}
                                         dataSource={dataSource}
                                         rowSelection={this.rowSelection}
-                                        scroll={{x: 1240, y: "100%"}}
+                                        scroll={{x: 1000, y: "100%"}}
                                         onRowClick={this.onRowClick}
                                         rowClassName={this.rowClassName}
+                                        current={curPage}
+                                        total={total}
+                                        pageSize={pageSize}
                                     />
                                 </div>
                             </div>

@@ -62,7 +62,7 @@ class LoginForm extends React.Component {
      * @method 进入注册界面
      */
     register() {
-
+      browserHistory.push('/register');
     }
 
     render() {

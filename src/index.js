@@ -12,6 +12,7 @@ import Register from './component/layout/register';
 
 import './themes/theme.less';
 
+window.browserHistory = browserHistory;
 const rootRoute = {
     path: '/',
     component: App,
@@ -27,7 +28,7 @@ const rootRoute = {
         if(loginData){
             return;
         }else{
-            nextState.location.pathname != '/login' && replaceState('/login');
+           // nextState.location.pathname != '/login' && replaceState('/login');
         }
     }
 };

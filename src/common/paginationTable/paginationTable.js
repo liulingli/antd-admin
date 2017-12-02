@@ -36,7 +36,8 @@ export class PaginationTable extends Component {
 
     render() {
         const {dataSource, total, current} = this.state;
-        const {columns, defaultPageSize, ...other} = this.props;
+        const {columns, defaultPageSize,rowKey, ...other} = this.props;
+        console.log(dataSource)
         return (
             <div className="pagination-table">
                 <Table
@@ -44,7 +45,6 @@ export class PaginationTable extends Component {
                     bordered
                     size="small"
                     pagination={false}
-                    rowKey={record => record.id}
                     columns={columns}
                     dataSource={dataSource}
                     {...other}

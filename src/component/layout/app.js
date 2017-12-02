@@ -19,6 +19,10 @@ export default class APP extends React.Component {
         this.state = {}
     }
 
+    compoentWillMount(){
+        consoele.log(this.props)
+    }
+
     render() {
         return (
             <AppContainer>
