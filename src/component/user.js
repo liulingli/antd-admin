@@ -21,7 +21,7 @@ export class User extends React.Component {
             dataSource: [],
             filteredInfo: null,
             total:0,
-            pageSize:20,
+            pageSize:5,
             curPage:1
         };
         this.columns = [
@@ -70,6 +70,7 @@ export class User extends React.Component {
         this.onRowClick = this.onRowClick.bind(this);
         this.getUserList = this.getUserList.bind(this);
         this.rowClassName = this.rowClassName.bind(this);
+        this.onChange = this.onChange.bind(this);
     }
 
     componentWillMount(){
@@ -92,10 +93,12 @@ export class User extends React.Component {
             if (response.success) {
                 let total =  response.result.total;
                 let list = response.result.list;
-                let dataSource = list.map((v,i)=>{
-                    v.key = "row"+i;
-                    return v;
-                })
+                let dataSource = [];
+                for(let i=0;i<list.length;i++){
+                    let copyList = Object.assign({},list[i]);
+                    copyList.key = "row"+i;
+                    dataSource.push(copyList);
+                }
                 this.setState({
                     loading: false,
                     dataSource:dataSource,
@@ -154,7 +157,7 @@ export class User extends React.Component {
     render() {
         let {loading, dataSource, activeIndex,total,curPage,pageSize} = this.state;
         const {className, ...other} = this.props;
-
+        console.log(dataSource)
         return (
             <div className="table-name">
                 <div className={classNames("query-content-main", className)}>
@@ -171,7 +174,7 @@ export class User extends React.Component {
                                 <div className="result-option">
                                     <Button type="primary">导出Excel</Button>
                                     <span className="show-data">
-                                         <Tag color="blue">总计：6</Tag>
+                                         <Tag color="blue">总计：{total}</Tag>
                                     </span>
                                 </div>
                                 <div className="result-table">
@@ -190,6 +193,7 @@ export class User extends React.Component {
                                         current={curPage}
                                         total={total}
                                         pageSize={pageSize}
+                                        onChange={this.onChange}
                                     />
                                 </div>
                             </div>

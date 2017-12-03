@@ -19,7 +19,7 @@ export default class MainLayout extends React.Component {
             menu: [{
                 key: '0',
                 icon: 'pie-chart',
-                text: 'dashboard',
+                text: '主页',
                 path: '/dashboard'
             }, {
                 key: '1',
@@ -29,7 +29,7 @@ export default class MainLayout extends React.Component {
             }, {
                 key: '1',
                 icon: 'user',
-                text: 'user',
+                text: '用户管理',
                 path: '/user'
             }]
         }

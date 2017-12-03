@@ -36,7 +36,7 @@ export class PaginationTable extends Component {
 
     render() {
         const {dataSource, total, current} = this.state;
-        const {columns, defaultPageSize,rowKey, ...other} = this.props;
+        const {columns, pageSize,rowKey, ...other} = this.props;
         console.log(dataSource)
         return (
             <div className="pagination-table">
@@ -52,7 +52,7 @@ export class PaginationTable extends Component {
                 <Pagination
                     showTotal={total => `总共 ${total} 条数据 `}
                     className="oak-pagination-init"
-                    defaultPageSize={defaultPageSize ? defaultPageSize : 50}
+                    pageSize={pageSize ? pageSize : 50}
                     current={current}
                     onChange={this.props.onChange}
                     total={total}
