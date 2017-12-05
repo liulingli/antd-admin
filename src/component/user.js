@@ -5,8 +5,7 @@ import React from 'react';
 import {browserHistory, Router} from "react-router";
 import classNames from 'classnames';
 import moment from 'moment';
-import {Table, Button, Tag, DatePicker, Select, Radio,message} from 'antd';
-import {PaginationTable} from '../common/paginationTable';
+import {Spin,Table, Button, Tag, DatePicker, Select, Radio,message} from 'antd';
 import {CardContainer, CardText} from '../common/card';
 
 const {RangePicker} = DatePicker;
@@ -20,18 +19,13 @@ export class User extends React.Component {
             selectedRows: [],
             dataSource: [],
             filteredInfo: null,
-            total:0,
-            pageSize:5,
-            curPage:1
+            pagination:{
+                current: 1,
+                pageSize: 10,
+                total: 0
+            }
         };
-        this.columns = [
-            {
-                title: "#",
-                width: 30,
-                render: (text, record, index) => {
-                    return <span>{index + 1}</span>
-                }
-            }, {
+        this.columns = [{
                 title: "用户id",
                 width: 100,
                 dataIndex: "user_id",
@@ -70,30 +64,27 @@ export class User extends React.Component {
         this.onRowClick = this.onRowClick.bind(this);
         this.getUserList = this.getUserList.bind(this);
         this.rowClassName = this.rowClassName.bind(this);
-        this.onChange = this.onChange.bind(this);
     }
 
     componentWillMount(){
         this.getUserList();
     }
 
-    componentWillReceiveProps(nextProps, nextState) {
-
-    }
-
     /**
      * @method 获取用户列表
      */
     getUserList(){
-        this.setState({loading: false})
+        const { pagination } = this.state;
+        this.setState({loading: true});
         fetch("/api/users", {method: "get", body: {
-            pageSize : this.state.pageSize,
-            curPage :  this.state.curPage
+            pageSize : pagination.pageSize,
+            curPage :  pagination.current
         }}).then((response) => {
             if (response.success) {
                 let total =  response.result.total;
                 let list = response.result.list;
                 let dataSource = [];
+                pagination.total = total;
                 for(let i=0;i<list.length;i++){
                     let copyList = Object.assign({},list[i]);
                     copyList.key = "row"+i;
@@ -102,7 +93,7 @@ export class User extends React.Component {
                 this.setState({
                     loading: false,
                     dataSource:dataSource,
-                    total : total
+                    pagination
                 })
             }
         })
@@ -115,7 +106,7 @@ export class User extends React.Component {
      */
     onRowClick(record, index) {
         this.setState({
-            //activeIndex : index
+            activeIndex : index
         })
     };
 
@@ -128,79 +119,63 @@ export class User extends React.Component {
     rowClassName(record, index){
         let {activeIndex} = this.state;
         if (index === activeIndex) {
-            if (record.isReceipt === 2) {
-                return "ant-table-row-active ant-table-row-danger";
-            } else {
-                return "ant-table-row-active";
-            }
+            return "ant-table-row-active"
         }
-        if (record.isReceipt === 2) {
-            return "ant-table-row-danger";
-        } else {
-            return "";
-        }
+        return "";
     };
-
-   /**
-    * @method 分页切换
-    * @param page
-    * @param pageSize
-    */
-    onChange(page, pageSize){
-       this.setState({
-         curPage : page
-       },()=>{
-          this.getUserList();
-       })
-    }
 
     render() {
         let {loading, dataSource, activeIndex,total,curPage,pageSize} = this.state;
         const {className, ...other} = this.props;
-        console.log(dataSource)
         return (
-            <div className="table-name">
-                <div className={classNames("query-content-main", className)}>
-                    <CardContainer>
-                        <CardText>
+            <Spin spinning={loading}>
+                <div className="table-name">
+                    <div className={classNames("query-content-main", className)}>
+                        <CardContainer>
+                            <CardText>
 
-                        </CardText>
-                    </CardContainer>
-                </div>
-                <div className={classNames(className, "result-content")}>
-                    <CardContainer>
-                        <CardText className="no-padding">
-                            <div className="result">
-                                <div className="result-option">
-                                    <Button type="primary">导出Excel</Button>
-                                    <span className="show-data">
-                                         <Tag color="blue">总计：{total}</Tag>
-                                    </span>
+                            </CardText>
+                        </CardContainer>
+                    </div>
+                    <div className={classNames(className, "result-content")}>
+                        <CardContainer>
+                            <CardText className="no-padding">
+                                <div className="result">
+                                    <div className="result-option">
+                                        <Button type="primary">导出Excel</Button>
+                                        <span className="show-data">
+                                             <Tag color="blue">总计：{total}</Tag>
+                                        </span>
+                                    </div>
+                                    <div className="result-table">
+                                        <Table
+                                            className="oak-table-init"
+                                            columns={this.columns}
+                                            dataSource={dataSource}
+                                            rowKey={record => { return record['user_id'].toString()} }
+                                            onRowClick={this.onRowClick}
+                                            rowClassName={this.rowClassName}
+                                            rowSelection={this.rowSelection}
+                                            pagination={{
+                                                ...this.state.pagination,
+                                                showSizeChanger: true,
+                                                onChange: (current, pageSize) => {
+                                                    Object.assign(this.state.pagination, { current, pageSize });
+                                                    this.getUserList();
+                                                },
+                                                onShowSizeChange: (current, pageSize) => {
+                                                    Object.assign(this.state.pagination, { current, pageSize });
+                                                    this.getUserList();
+                                                }
+                                            }}
+                                        />
+                                    </div>
                                 </div>
-                                <div className="result-table">
-                                    <PaginationTable
-                                        bordered
-                                        className="oak-table-init"
-                                        size="small"
-                                        pagination={false}
-                                        loading={loading}
-                                        columns={this.columns}
-                                        dataSource={dataSource}
-                                        rowSelection={this.rowSelection}
-                                        scroll={{x: 1000, y: "100%"}}
-                                        onRowClick={this.onRowClick}
-                                        rowClassName={this.rowClassName}
-                                        current={curPage}
-                                        total={total}
-                                        pageSize={pageSize}
-                                        onChange={this.onChange}
-                                    />
-                                </div>
-                            </div>
-                        </CardText>
-                    </CardContainer>
+                            </CardText>
+                        </CardContainer>
+                    </div>
                 </div>
-            </div>
+            </Spin>
         )
     }
 }
