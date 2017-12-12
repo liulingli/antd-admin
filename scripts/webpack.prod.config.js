@@ -45,7 +45,10 @@ const config  = {
         loader : 'style-loader!css-loader!less-loader'
       },{
         test : /\.css$/,
-        include: path.join(__dirname, '../node_modules/antd'),
+        include: [
+            path.join(__dirname, '../node_modules/quill/dist'),
+            path.join(__dirname, '../node_modules/antd'),
+        ],
         loader : ExtractTextPlugin.extract({fallback: "style-loader", use: "css-loader"})
       },{
         test: /\.png$/,

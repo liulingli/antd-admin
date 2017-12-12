@@ -33,7 +33,10 @@ const config = {
                 loader: 'style-loader!css-loader!less-loader'
             }, {
                 test: /\.css$/,
-                include: path.join(__dirname, '../node_modules/antd'),
+                include: [
+                    path.join(__dirname, '../node_modules/quill/dist'),
+                    path.join(__dirname, '../node_modules/antd'),
+                ],
                 loader: 'style-loader!css-loader'
             }, {
                 test: /\.png$/,

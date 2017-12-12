@@ -44,6 +44,7 @@ export class PaginationTable extends Component {
                     className="table-init"
                     bordered
                     size="small"
+                    rowKey={record=>record['user_id']}
                     pagination={false}
                     columns={columns}
                     dataSource={dataSource}

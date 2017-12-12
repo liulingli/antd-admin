@@ -23,16 +23,20 @@ export default class MainLayout extends React.Component {
                 path: '/dashboard'
             }, {
                 key: '1',
-                icon: 'desktop',
-                text: 'table',
-                path: '/table'
-            }, {
-                key: '1',
                 icon: 'user',
                 text: '用户管理',
                 path: '/user'
+            }, {
+                key: '2',
+                icon: 'file',
+                text: '博客管理',
+                path: '/blogs'
             }]
         }
+
+        this.confirm = this.confirm.bind(this);
+        this.collapseToggle = this.collapseToggle.bind(this);
+        this.onMenuChange = this.onMenuChange.bind(this);
     }
 
     componentWillMount(){
@@ -42,36 +46,29 @@ export default class MainLayout extends React.Component {
     }
 
     /**
-     *@method 验证登录
-     */
-    checkLogin = (values) => {
-        if (values.userName === '123' && values.password === '123') {
-            this.setState({
-                isLogin: true
-            });
-            browserHistory.push('/dashboard');
-            window.sessionStorage.setItem("isLogin", true);
-        }
-    };
-    /**
      * @method 左侧菜单栏伸缩
      */
-    collapseToggle = () => {
+    collapseToggle(){
         this.setState({
             collapse: !this.state.collapse
         })
     };
 
-    confirm = () => {
-
+    /**
+     * @method 退出登录
+     */
+    confirm(){
+        localStorage.clear();
+        browserHistory.replace('/login');
     };
+
     /**
      * @method 菜单单击事件
      * @param item
      * @param key
      * @param keyPath
      */
-    onMenuChange = ({item, key, keyPath}) => {
+    onMenuChange({item, key, keyPath}) {
         try {
             browserHistory.push(key);
         } catch (err) {
@@ -89,7 +86,7 @@ export default class MainLayout extends React.Component {
                 <div className="header-right">
                     <ul className="header-menu">
                         <li className="menu-item"><Icon type="user"/>测试用户</li>
-                        <Popconfirm placement="bottom" title={"确定退出系统？"} onConfirm={confirm} okText="确定"
+                        <Popconfirm placement="bottom" title={"确定退出系统？"} onConfirm={this.confirm} okText="确定"
                                     cancelText="取消">
                             <li className="menu-item"><Icon type="logout"/>退出系统</li>
                         </Popconfirm>
