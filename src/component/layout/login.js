@@ -38,7 +38,8 @@ class LoginForm extends React.Component {
                     if (response.success) {
                         message.success("登录成功！")
                         browserHistory.push('/');
-                        localStorage.setItem('user', response.result)
+                        localStorage.setItem('user', JSON.stringify(response.result))
+                        localStorage.setItem('token',response.token)
                     } else {
                         const code = response.code; //错误码 code：-1 用户不存在， code = -2 密码错误
                         switch (code) {
@@ -51,7 +52,6 @@ class LoginForm extends React.Component {
                             default :
                                 break;
                         }
-
                     }
                 })
             }

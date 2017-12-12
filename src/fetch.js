@@ -10,18 +10,20 @@ import qs from 'qs';
  * fetch(url,{method:"",body:{}}).then(response=>{}).catch((err)=>{})
  */
 window.fetch = (url,params) =>{
+    const token = localStorage.getItem('token');
     let param = {};
     if(params.method.toLocaleLowerCase() == "post"){
         param = {
             url : url,
             method : params.method,
-            headers : {'Content-Type': 'application/x-www-form-urlencoded'},
+            headers : {'Content-Type': 'application/x-www-form-urlencoded','token':token},
             data: qs.stringify(params.body),
         }
     }else{
         param = {
             url : url + "?" + qs.stringify(params.body),
             method : params.method,
+            headers : {'token':token},
         }
     }
     if(params.responseType){

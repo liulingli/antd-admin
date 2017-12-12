@@ -3,6 +3,7 @@
  */
 
 import React from 'react';
+import {browserHistory, Router} from "react-router";
 import {Form, Input, Button, Icon, Checkbox} from 'antd';
 import '../../fetch';
 
