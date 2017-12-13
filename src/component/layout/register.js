@@ -46,7 +46,7 @@ class RegisterForm extends React.Component {
                             <span>antd-admin后台管理系统</span>
                         </div>
                         <FormItem>
-                            {getFieldDecorator('username', {
+                            {getFieldDecorator('userName', {
                                 rules: [{required: true, message: '请输入用户名!'}],
                             })(
                                 <Input prefix={<Icon type="user" style={{fontSize: 13}}/>} placeholder="用户名"/>

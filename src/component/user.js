@@ -28,23 +28,44 @@ export class User extends React.Component {
         this.columns = [{
                 title: "用户id",
                 width: 100,
-                dataIndex: "user_id",
+                dataIndex: "id",
                 render: (text, record, index) => {
                     return <span title={text}>{text}</span>
                 }
             }, {
                 title: "用户姓名",
                 width: 100,
-                dataIndex: "username",
+                dataIndex: "userName",
                 render: (text, record, index) => {
                     return <span>{text}</span>
                 }
             }, {
-                title: "用户密码",
+                title: "真实姓名",
                 width: 70,
-                dataIndex: "password",
+                dataIndex: "trueName",
                 render: (text, record, index) => {
                     return <span>{text}</span>
+                }
+            }, {
+                title: "邮箱",
+                width: 70,
+                dataIndex: "mail",
+                render: (text, record, index) => {
+                    return <span>{text}</span>
+                }
+            }, {
+                title: "手机号码",
+                width: 100,
+                dataIndex: "phone",
+                render: (text, record, index) => {
+                    return <span>{text}</span>
+                }
+            }, {
+                title: "注册时间",
+                width: 120,
+                dataIndex: "createdAt",
+                render: (text, record, index) => {
+                    return <span>{ moment(text).format('YYYY-MM-DD HH:mm:ss') }</span>
                 }
             }, {
                 title: "操作",
@@ -91,6 +112,7 @@ export class User extends React.Component {
                     dataSource.push(copyList);
                 }
                 this.setState({
+                    total: total,
                     loading: false,
                     dataSource:dataSource,
                     pagination
@@ -152,7 +174,7 @@ export class User extends React.Component {
                                             className="oak-table-init"
                                             columns={this.columns}
                                             dataSource={dataSource}
-                                            rowKey={record => { return record['user_id'].toString()} }
+                                            rowKey={record => record.id }
                                             onRowClick={this.onRowClick}
                                             rowClassName={this.rowClassName}
                                             rowSelection={this.rowSelection}
