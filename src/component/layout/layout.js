@@ -16,6 +16,7 @@ export default class MainLayout extends React.Component {
         super(props);
         this.state = {
             collapse: false,
+            selectedKeys: '/dashboard',
             menu: [{
                 key: '0',
                 icon: 'pie-chart',
@@ -32,17 +33,21 @@ export default class MainLayout extends React.Component {
                 text: '博客管理',
                 path: '/blogs'
             }]
-        }
+        };
 
         this.confirm = this.confirm.bind(this);
         this.collapseToggle = this.collapseToggle.bind(this);
         this.onMenuChange = this.onMenuChange.bind(this);
     }
 
-    componentWillMount(){
-        console.log(this.props)
-        // 生成左侧菜单
-
+    componentDidMount(){
+        const { menu } = this.state;
+        const href = window.location.href;
+        menu.map((v,i)=>{
+           if(href.indexOf(v.path) > -1){
+               this.setState({ selectedKeys: v.path })
+           }
+        })
     }
 
     /**
@@ -70,6 +75,7 @@ export default class MainLayout extends React.Component {
      */
     onMenuChange({item, key, keyPath}) {
         try {
+            this.setState({ selectedKeys: key });
             browserHistory.push(key);
         } catch (err) {
             console.log(1222)
@@ -77,7 +83,7 @@ export default class MainLayout extends React.Component {
     };
 
     render() {
-        const {isLogin, collapse} = this.state;
+        const {isLogin, collapse, selectedKeys} = this.state;
         return (
             <Layout className="main-layout">
                 <Header className={collapse ? "collapse" : ""}>
@@ -104,7 +110,7 @@ export default class MainLayout extends React.Component {
                             <span>antd-admin</span>
                         </div>
                         <Menu
-                            defaultSelectedKeys={[this.state.menu[0].path]}
+                            selectedKeys={[selectedKeys]}
                             defaultOpenKeys={[this.state.menu[0].path]}
                             mode="inline"
                             theme="light"
